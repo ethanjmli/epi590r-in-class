@@ -57,3 +57,41 @@ tbl_summary(
 	modify_footnote(update = everything() ~ NA) |>
 	modify_header(label = "**Variable**", p.value = "**P**")
 
+
+tbl_summary(
+	nlsy,
+	by = sex_cat,
+	include = c(contains(c("sleep","income")),
+							contains(c("race","region")) & ends_with("cat")),
+	label = list(
+		sleep_wkdy ~ "Weekday Sleep",
+		sleep_wknd ~ "Weekend Sleep",
+		income ~ "Income",
+		race_eth_cat ~ "Race/Ethnicity",
+		region_cat ~ "Region"
+							),
+	statistic = list(income ~ "{median}; ({p10},{p90})",
+									 sleep_wkdy ~"{median}; {min},{max}",
+									 sleep_wknd ~"{median}; {min},{max}"
+									 ),
+	digits = list(income ~ c(3,3,3),
+								sleep_wkdy ~ c(1,1,1),
+								sleep_wknd ~ c(1,1,1)),
+	missing_text = "Missing"
+	) |>
+	add_p(test = list(all_continuous()~"t.test",
+										all_categorical()~"chisq.test")) |>
+	add_overall(col_label = "**Total**") |>
+	bold_labels() |>
+	modify_table_styling(
+		column = label,
+		rows = label == "Race/Ethnicity",
+		footnote= "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data"
+	)|>
+	modify_header(
+		label = "**Variable**",
+		p.value = "**P**"
+	)
+	#modify_footnote(update = label ~ "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data")
+#
+
