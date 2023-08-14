@@ -62,7 +62,9 @@ tbl_summary(
 
 #1. Download the R script here and put it into your in-class project folder.
 
+
 #2. Install {gtsummary} and run the examples.
+
 
 #3. Make a tbl_summary(). Include categorical region, race/ethnicity, income,
 #and the sleep variables (use a helper function to select those) and
@@ -80,6 +82,7 @@ tbl_summary(
 		region_cat ~ "Region"
 	)
 )
+
 
 #4. Stratify the table by sex. Add a p-value comparing the sexes and an overall
 #column combining both sexes.
@@ -100,6 +103,7 @@ tbl_summary(
 	add_p(test = list(all_continuous()~"t.test",
 										all_categorical()~"chisq.test"))
 
+
 #5. For the income variable, show the 10th and 90th percentiles of income with 3
 #digits, and for the sleep variables, show the min and the max with 1 digit.
 
@@ -115,16 +119,17 @@ tbl_summary(
 		race_eth_cat ~ "Race/Ethnicity",
 		region_cat ~ "Region"
 	),
-	statistic = list(income ~ "{median}; ({p10},{p90})",
-									 sleep_wkdy ~"{median}; {min},{max}",
-									 sleep_wknd ~"{median}; {min},{max}"
+	statistic = list(income ~ "10th {p10}, 90th {p90}",
+									 sleep_wkdy ~"Min = {min}, Max = {max}",
+									 sleep_wknd ~"Min = {min}, Max = {max}"
 	),
-	digits = list(income ~ c(3,3,3),
-								sleep_wkdy ~ c(1,1,1),
-								sleep_wknd ~ c(1,1,1)),
+	digits = list(income ~ c(3,3),
+								sleep_wkdy ~ c(1,1),
+								sleep_wknd ~ c(1,1)),
 ) |>
 	add_p(test = list(all_continuous()~"t.test",
 										all_categorical()~"chisq.test"))
+
 
 #6. Add a footnote to the race/ethnicity variable with a link to the page describing
 #how NLSY classified participants:
@@ -142,13 +147,13 @@ tbl_summary(
 		race_eth_cat ~ "Race/Ethnicity",
 		region_cat ~ "Region"
 	),
-	statistic = list(income ~ "{median}; ({p10},{p90})",
-									 sleep_wkdy ~"{median}; {min},{max}",
-									 sleep_wknd ~"{median}; {min},{max}"
+	statistic = list(income ~ "10th {p10}, 90th {p90}",
+									 sleep_wkdy ~"Min = {min}, Max = {max}",
+									 sleep_wknd ~"Min = {min}, Max = {max}"
 	),
-	digits = list(income ~ c(3,3,3),
-								sleep_wkdy ~ c(1,1,1),
-								sleep_wknd ~ c(1,1,1)),
+	digits = list(income ~ c(3,3),
+								sleep_wkdy ~ c(1,1),
+								sleep_wknd ~ c(1,1)),
 ) |>
 	add_p(test = list(all_continuous()~"t.test",
 										all_categorical()~"chisq.test")) |>
@@ -158,8 +163,8 @@ tbl_summary(
 		footnote= "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data"
 		)
 
-#7. Play around with the extra functions from the examples and/or from the documentation
 
+#7. Play around with the extra functions from the examples and/or from the documentation
 
 tbl_summary(
 	nlsy,
@@ -173,13 +178,13 @@ tbl_summary(
 		race_eth_cat ~ "Race/Ethnicity",
 		region_cat ~ "Region"
 							),
-	statistic = list(income ~ "{median}; ({p10},{p90})",
-									 sleep_wkdy ~"{median}; {min},{max}",
-									 sleep_wknd ~"{median}; {min},{max}"
+	statistic = list(income ~ "10th {p10}, 90th {p90}",
+									 sleep_wkdy ~"Min = {min}, Max = {max}",
+									 sleep_wknd ~"Min = {min}, Max = {max}"
 									 ),
-	digits = list(income ~ c(3,3,3),
-								sleep_wkdy ~ c(1,1,1),
-								sleep_wknd ~ c(1,1,1)),
+	digits = list(income ~ c(3,3),
+								sleep_wkdy ~ c(1,1),
+								sleep_wknd ~ c(1,1)),
 	missing_text = "Missing"
 	) |>
 	add_p(test = list(all_continuous()~"t.test",
@@ -191,10 +196,9 @@ tbl_summary(
 		rows = label == "Race/Ethnicity",
 		footnote= "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data"
 	)|>
+	modify_footnote(update = )
 	modify_header(
 		label = "**Variable**",
 		p.value = "**P**"
 	)
-	#modify_footnote(update = label ~ "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data")
-#
 
