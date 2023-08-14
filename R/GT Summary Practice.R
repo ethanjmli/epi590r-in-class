@@ -58,6 +58,109 @@ tbl_summary(
 	modify_header(label = "**Variable**", p.value = "**P**")
 
 
+###Practice###
+
+#1. Download the R script here and put it into your in-class project folder.
+
+#2. Install {gtsummary} and run the examples.
+
+#3. Make a tbl_summary(). Include categorical region, race/ethnicity, income,
+#and the sleep variables (use a helper function to select those) and
+#make sure they are nicely labeled.
+
+tbl_summary(
+	nlsy,
+	include = c(contains(c("sleep","income")),
+							contains(c("race","region")) & ends_with("cat")),
+	label = list(
+		sleep_wkdy ~ "Weekday Sleep",
+		sleep_wknd ~ "Weekend Sleep",
+		income ~ "Income",
+		race_eth_cat ~ "Race/Ethnicity",
+		region_cat ~ "Region"
+	)
+)
+
+#4. Stratify the table by sex. Add a p-value comparing the sexes and an overall
+#column combining both sexes.
+
+tbl_summary(
+	nlsy,
+	by = sex_cat,
+	include = c(contains(c("sleep","income")),
+							contains(c("race","region")) & ends_with("cat")),
+	label = list(
+		sleep_wkdy ~ "Weekday Sleep",
+		sleep_wknd ~ "Weekend Sleep",
+		income ~ "Income",
+		race_eth_cat ~ "Race/Ethnicity",
+		region_cat ~ "Region"
+	)
+) |>
+	add_p(test = list(all_continuous()~"t.test",
+										all_categorical()~"chisq.test"))
+
+#5. For the income variable, show the 10th and 90th percentiles of income with 3
+#digits, and for the sleep variables, show the min and the max with 1 digit.
+
+tbl_summary(
+	nlsy,
+	by = sex_cat,
+	include = c(contains(c("sleep","income")),
+							contains(c("race","region")) & ends_with("cat")),
+	label = list(
+		sleep_wkdy ~ "Weekday Sleep",
+		sleep_wknd ~ "Weekend Sleep",
+		income ~ "Income",
+		race_eth_cat ~ "Race/Ethnicity",
+		region_cat ~ "Region"
+	),
+	statistic = list(income ~ "{median}; ({p10},{p90})",
+									 sleep_wkdy ~"{median}; {min},{max}",
+									 sleep_wknd ~"{median}; {min},{max}"
+	),
+	digits = list(income ~ c(3,3,3),
+								sleep_wkdy ~ c(1,1,1),
+								sleep_wknd ~ c(1,1,1)),
+) |>
+	add_p(test = list(all_continuous()~"t.test",
+										all_categorical()~"chisq.test"))
+
+#6. Add a footnote to the race/ethnicity variable with a link to the page describing
+#how NLSY classified participants:
+#https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data
+
+tbl_summary(
+	nlsy,
+	by = sex_cat,
+	include = c(contains(c("sleep","income")),
+							contains(c("race","region")) & ends_with("cat")),
+	label = list(
+		sleep_wkdy ~ "Weekday Sleep",
+		sleep_wknd ~ "Weekend Sleep",
+		income ~ "Income",
+		race_eth_cat ~ "Race/Ethnicity",
+		region_cat ~ "Region"
+	),
+	statistic = list(income ~ "{median}; ({p10},{p90})",
+									 sleep_wkdy ~"{median}; {min},{max}",
+									 sleep_wknd ~"{median}; {min},{max}"
+	),
+	digits = list(income ~ c(3,3,3),
+								sleep_wkdy ~ c(1,1,1),
+								sleep_wknd ~ c(1,1,1)),
+) |>
+	add_p(test = list(all_continuous()~"t.test",
+										all_categorical()~"chisq.test")) |>
+	modify_table_styling(
+		column = label,
+		rows = label == "Race/Ethnicity",
+		footnote= "https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data"
+		)
+
+#7. Play around with the extra functions from the examples and/or from the documentation
+
+
 tbl_summary(
 	nlsy,
 	by = sex_cat,
