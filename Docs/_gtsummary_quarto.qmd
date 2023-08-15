@@ -181,3 +181,8 @@ tbl_int <- tbl_regression(
 tbl_merge(list(tbl_no_int, tbl_int), 
           tab_spanner = c("**Model 1**", "**Model 2**"))
 ```
+
+```{r}
+library(emo)
+emo::ji("banana")
+```
