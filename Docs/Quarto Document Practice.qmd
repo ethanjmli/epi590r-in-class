@@ -1,21 +1,14 @@
 ---
-title: "New Quarto Practice"
+title: "Quarto-Practicxe"
 author: "Ethan Li"
 format: html
 editor: visual
----
-
-text
-
-*italic text*
-
-**bold text**
-
--   bullet point
 
 ```{r}
-x<-3
+x <- 3
+x
 ```
+---
 
 ## Quarto
 
