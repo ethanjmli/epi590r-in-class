@@ -1,4 +1,4 @@
-install.packages("praise")
+#install.packages("praise")
 library(praise)
 praise::praise()
 
