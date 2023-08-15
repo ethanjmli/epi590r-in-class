@@ -5,7 +5,7 @@ format:
   html:
     theme: yeti
 editor: visual
-
+cache: true
 ---
 
 text
@@ -22,7 +22,25 @@ here's my change
 #| echo: false
 x<-3
 2+2
+
 ```
+
+```{r}
+#| label: tbl-one
+#| tbl-cap: "This is a great table"
+knitr::kable(mtcars)
+
+```
+
+
+```{r}
+#| label: fig-hist
+#| fig-cap: "This is a histogram"
+hist(rnorm(100))
+```
+@fig-hist contains a histogram and @tbl-one a table.
+
+there were `r 3+4` participants
 
 ## Quarto
 
