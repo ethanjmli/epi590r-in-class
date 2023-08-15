@@ -183,6 +183,6 @@ tbl_merge(list(tbl_no_int, tbl_int),
 ```
 
 ```{r}
-library(emo)
-emo::ji("banana")
+
+
 ```
