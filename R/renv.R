@@ -3,6 +3,6 @@ library(praise)
 praise::praise()
 
 
-install.packages("fortunes")
+#install.packages("fortunes")
 library(fortunes)
 fortunes::fortune()
